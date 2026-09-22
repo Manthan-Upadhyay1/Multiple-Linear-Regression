@@ -337,14 +337,14 @@ elif page == "EDA":
                 ax.set_ylabel("Price ($)")
                 show(fig)
 
-        st.markdown("**Explore any numeric feature**")
-        numeric_cols = [c for c in data.select_dtypes(include=np.number).columns if c != "price"]
-        chosen = st.selectbox("Feature", numeric_cols, index=numeric_cols.index("wheelbase"))
-        fig, ax = plt.subplots(figsize=(8, 4))
-        sns.regplot(data=data, x=chosen, y="price", ax=ax,
-                    scatter_kws={"alpha": 0.6}, line_kws={"color": "firebrick"})
-        ax.set_title(f"{chosen} vs price (r = {data[chosen].corr(data['price']):.2f})")
-        show(fig)
+        # st.markdown("**Explore any numeric feature**")
+        # numeric_cols = [c for c in data.select_dtypes(include=np.number).columns if c != "price"]
+        # chosen = st.selectbox("Feature", numeric_cols, index=numeric_cols.index("wheelbase"))
+        # fig, ax = plt.subplots(figsize=(8, 4))
+        # sns.regplot(data=data, x=chosen, y="price", ax=ax,
+        #             scatter_kws={"alpha": 0.6}, line_kws={"color": "firebrick"})
+        # ax.set_title(f"{chosen} vs price (r = {data[chosen].corr(data['price']):.2f})")
+        # show(fig)
 
         st.subheader("Correlation matrix")
         corr = data.select_dtypes(include=np.number).corr()
@@ -461,7 +461,7 @@ elif page == "Model Information":
     coef["Abs"] = coef["Coefficient"].abs()
     coef = coef.sort_values("Abs", ascending=False)
 
-    top_n = st.slider("Number of features to show in the chart", 5, len(coef), 15)
+    top_n = st.slider("Number of features to show in the chart", 5, len(coef), len(coef))
     top = coef.head(top_n).iloc[::-1]
     fig, ax = plt.subplots(figsize=(9, max(4, top_n * 0.35)))
     ax.barh(top["Feature"], top["Coefficient"],
